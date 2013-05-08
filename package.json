@@ -1,0 +1,35 @@
+{
+    "name": "Cloudnetworks"
+  , "description": "Cloudnetworks Dashboard & Cloudapps"
+  , "version": "1.0.0"
+  , "private": true
+  , "author": "Donald Derek Haddad <donaldderek.haddad@gmail.com> (https://github.com/DonaldDerek/cloudnetworks)"
+  , "engines": {
+        "node": "0.8.14"
+      , "npm": "1.1.65"
+    }
+  , "scripts": {
+      "start": "NODE_ENV=development ./node_modules/.bin/nodemon server.js"
+    }
+  , "dependencies": {
+      "express": "latest"
+    , "socket.io": "latest"
+    , "jade": "latest"
+    , "mongoose": "latest"
+    , "connect-mongo": "latest"
+    , "connect-flash": "latest"
+    , "passport": "latest"
+    , "passport-local": "latest"
+    , "passport-facebook": "latest"
+    , "passport-twitter": "latest"
+    , "passport-github": "latest"
+    , "passport-google-oauth": "latest"
+    , "imager": "latest"
+    , "notifier": "latest"
+    , "underscore": "latest"
+    , "gzippo": "latest"
+    , "async": "latest"
+    , "nodemon": "latest"
+    , "view-helpers": "latest"
+  }
+}

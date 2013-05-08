@@ -1,0 +1,30 @@
+extends ../layouts/default
+
+block main
+  h1 Boxes
+
+block content
+  each box in boxes
+    .article(data-id='#{box.serial}')
+      a.title(href='/boxes/'+box._id, title=box.name) #{box.name}
+      p.author 
+        span Serial Number: #{box.serial}
+      p.author.status 
+        span Status: #{box.status}
+      .author
+        span= formatDate(box.createdAt, "%b %d, %Y at %I:%M %p")
+        span &nbsp;| User :&nbsp;
+        a(href="/users/"+box.user._id)=box.user.name
+        | &nbsp;|&nbsp;
+        if (box.tags)
+          span.tags
+            span Tags :&nbsp;
+            each tag in box.tags.split(',')
+              a.tag(href="/tags/"+tag)
+                i.icon-tags
+                |  #{tag}
+
+  if (pages > 1)
+    .pagination
+      ul
+        != createPagination(pages, page)

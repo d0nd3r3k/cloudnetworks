@@ -1,0 +1,33 @@
+extends ../layouts/default
+
+block main
+  h1= box.name
+
+block content
+  .row
+    .span9
+      p.author 
+        span Serial Number: #{box.serial}
+      p.author 
+        span Status: #{box.status}  
+      p.author
+        span User :&nbsp;
+        a(href="/users/"+box.user._id)=box.user.name
+      .date= formatDate(box.createdAt, "%b %d, %Y at %I:%M %p")
+      if (box.tags)
+        .tags
+          | Tags :&nbsp;
+          each tag in box.tags.split(',')
+            a.tag(href="/tags/"+tag)
+              i.icon-tags
+              |  #{tag}
+
+  p
+    br
+    form.center.form-inline.confirm(action="/boxes/"+box.id, method="post")
+      a.btn(href='/boxes/'+box._id+'/edit', title="edit") Edit
+      &nbsp;&nbsp;
+      input(type="hidden", name="_method", value="DELETE")
+      button.btn.btn-danger(type="submit") delete
+
+  
