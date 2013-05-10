@@ -14,7 +14,7 @@ $(document).ready(function(){
 
 	socket.emit('boxIsOnline', {'serial':serial});
 
-	/*socket.on('authenticate', function (data){
-		alert("Synced to Cloud");
-	});*/
+	socket.on('syncOnBox', function (data){
+		console.log(data);
+	});
 });

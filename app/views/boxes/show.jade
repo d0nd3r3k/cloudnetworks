@@ -7,6 +7,7 @@ block content
   .row
     .span9
       p.author 
+        .serial(data-serial=box.serial)
         span Serial Number: #{box.serial}
       p.author 
         span Status: #{box.status}  
@@ -25,9 +26,39 @@ block content
   p
     br
     form.center.form-inline.confirm(action="/boxes/"+box.id, method="post")
+      a.btn.btn-primary(href='#uploadMedia',role="button",data-toggle="modal", title="upload media") Upload media
+      &nbsp;&nbsp;
       a.btn(href='/boxes/'+box._id+'/edit', title="edit") Edit
       &nbsp;&nbsp;
       input(type="hidden", name="_method", value="DELETE")
       button.btn.btn-danger(type="submit") delete
-
   
+  each media in box.media
+    if (media)
+      .media
+        img(src=media.cdnUri + '/mini_' + media.files[0])
+        span.date #{formatDate(media.createdAt, "%b %d, %Y at %I:%M %p")}
+
+  div#uploadMedia.modal.hide.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
+    .modal-header
+      button.close(type="button", data-dismiss="modal", aria-hidden="true") ×
+      h3 Upload Media
+    .modal-body
+      form.form-horizontal(method="post", action="/boxes/"+box.id+"/media", enctype="multipart/form-data")
+        .control-group
+          label.control-label(for='title') Title
+          .controls
+            input#title.input-xlarge(type='text', name="title", placeholder='Enter the title')
+        
+        .control-group
+          label.control-label(for='title') Media File
+          .controls
+            input(type='file', name="image[]")
+        
+        .control-group
+          label.control-label(for='desc') Tags
+          .controls
+            input#tags(type='text', name="tags", placeholder='Enter the tags')
+        .modal-footer
+          button.btn(data-dismiss="modal", aria-hidden="true") Close 
+          button.btn.btn-primary(type='submit') Upload Media 

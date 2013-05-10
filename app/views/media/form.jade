@@ -1,0 +1,42 @@
+extends ../layouts/default
+
+block content
+  - var action = '/media'
+  if (!medium.isNew)
+    - action += '/'+medium.id
+
+  if (typeof errors !== 'undefined')
+    .fade.in.alert.alert-block.alert-error
+      a.close(data-dismiss="alert", href="javascript:void(0)") x
+      ul
+        each error in errors
+          li= error.type
+
+  .row
+    .span7
+      form.form-horizontal(method="post", action=action, enctype="multipart/form-data")
+        if (!medium.isNew)
+          input(type="hidden", name="_method", value="PUT")
+
+        .control-group
+          label.control-label(for='title') Title
+          .controls
+            input#title.input-xlarge(type='text', name="title", value=medium.title, placeholder='Enter the title')
+
+        .control-group
+          label.control-label(for='title') Media File
+          .controls
+            input(type='file', name="image[]")
+
+        .control-group
+          label.control-label(for='desc') Tags
+          .controls
+            input#tags(type='text', name="tags", value=medium.tags, placeholder='Enter the tags')
+
+        .form-actions
+          button.btn.btn-primary(type='submit') Upload Media
+          &nbsp;
+          a.btn(href='/media', title="cancel") Cancel
+    .span5
+      if (!medium.isNew && medium.image && medium.image.files && medium.image.files.length)
+        img(src=medium.image.cdnUri + '/mini_' + medium.image.files[0])

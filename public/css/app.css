@@ -52,3 +52,13 @@ ul.oAuth {
 ul.oAuth li{
   margin: 10px;
 }
+.media{
+  float: left;
+  width: 180px;
+  height: 180px;
+  margin:10px;
+}
+.media img{
+  height: 160px;
+  width: 180px;
+}

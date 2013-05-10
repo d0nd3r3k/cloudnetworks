@@ -45,6 +45,22 @@ $(document).ready(function () {
     $('.article[data-id='+serial+']').find('.status span').html('Status: Offline');
     console.log("Box" + data.serial + "is Offline")
   });
-
+  
+  //Sync Media
+    var media = [];
+    var box_serial = $('.serial').data('serial');
+    $('.media').each(function(){
+      var image = $(this).find('img').attr('src');
+      
+      var obj = {
+        medium: image
+      };
+      media.push(obj);
+    });
+    var meta = [{'id':user_id, 'serial':box_serial}];
+    meta.push(media)
+    console.log(meta)
+    socket.emit('syncMedia', meta);
+  
 });
 

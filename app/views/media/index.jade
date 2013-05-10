@@ -1,0 +1,27 @@
+extends ../layouts/default
+
+block main
+  h1 Media
+
+block content
+  each medium in media
+    .medium
+      a.title(href='/media/'+medium._id, title=medium.title) #{medium.title}
+      p=medium.body
+      .author
+        span= formatDate(medium.createdAt, "%b %d, %Y at %I:%M %p")
+        span &nbsp;| Author :&nbsp;
+        a(href="/users/"+medium.user._id)=medium.user.name
+        | &nbsp;|&nbsp;
+        if (medium.tags)
+          span.tags
+            span Tags :&nbsp;
+            each tag in medium.tags.split(',')
+              a.tag(href="/tags/"+tag)
+                i.icon-tags
+                |  #{tag}
+
+  if (pages > 1)
+    .pagination
+      ul
+        != createPagination(pages, page)

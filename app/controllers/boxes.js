@@ -1,3 +1,5 @@
+var mongoose = require('mongoose')
+, Medium = mongoose.model('Medium')
 
 /**
  * Module dependencies.
@@ -138,3 +140,42 @@ exports.index = function(req, res){
     })
   })
 }
+
+/**
+ * Add New Media
+ */
+exports.addMedia = function(req, res){
+  
+  var medium = new Medium(req.body)
+      medium.user = req.user
+      box = req.box
+    
+      medium.uploadAndSave(req.files.image, function (err) {
+        if (err) {
+          res.render('media/new', {
+            title: 'New Medium',
+            medium: medium,
+            errors: err.errors
+          })
+        }
+        else {
+          box.saveMedia(req.files.image, function (err) {
+              if (err) {
+                  res.render('/boxes', {
+                    title: 'New Medium In Box',
+                    medium: medium,
+                    errors: err.errors
+                  })
+              }
+              else {
+                  res.redirect('/boxes/' + box._id)
+              }
+          })
+        }
+      })  
+    
+}
+
+
+
+

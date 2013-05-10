@@ -1,6 +1,7 @@
 module.exports = {
   variants: {
     article: {
+      
       resize: {
         detail: "x440"
       },
@@ -8,10 +9,14 @@ module.exports = {
         mini: {resize: "63504@", crop: "252x210"}
       }
     },
-    gallery: {
-      crop: {
-        thumb: "100x100"
+    medium: {
+      resizeAndCrop: {
+        mini: {resize: "63504@", crop: "252x210"}
+      },
+      resize: {
+        detail: "x800"
       }
+      
     }
   },
 

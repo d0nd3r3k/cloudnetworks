@@ -76,7 +76,17 @@ io.set('authorization', function (data, accept) {
         user_id = data.id;
         online_users[user_id] = socket
     })
-
+    socket.on('syncMedia', function(data){
+      
+      if(online_boxes[data[0].serial] === undefined){
+        console.log('Error: Box is offline');   
+      }
+      else {
+        var ss = online_boxes[data[0].serial]                    
+        ss.emit("syncOnBox",data);
+    }
+    })
+    
     socket.on('disconnect', function(){
       if(serial != ""){
         //Find box and update status to offline

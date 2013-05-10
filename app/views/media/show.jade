@@ -1,0 +1,33 @@
+extends ../layouts/default
+
+block main
+  h1= medium.title
+
+block content
+  .row
+    .span9
+      p=medium.body
+      p.author
+        span Author :&nbsp;
+        a(href="/users/"+medium.user._id)=medium.user.name
+      .date= formatDate(medium.createdAt, "%b %d, %Y at %I:%M %p")
+      if (medium.tags)
+        .tags
+          | Tags :&nbsp;
+          each tag in medium.tags.split(',')
+            a.tag(href="/tags/"+tag)
+              i.icon-tags
+              |  #{tag}
+    .span3
+      if (!medium.isNew && medium.image && medium.image.files && medium.image.files.length)
+        img(src=medium.image.cdnUri + '/mini_' + medium.image.files[0])
+
+  p
+    br
+    form.center.form-inline.confirm(action="/media/"+medium.id, method="post")
+      a.btn(href='/media/'+medium._id+'/edit', title="edit") Edit
+      &nbsp;&nbsp;
+      input(type="hidden", name="_method", value="DELETE")
+      button.btn.btn-danger(type="submit") delete
+
+  

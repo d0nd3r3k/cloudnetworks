@@ -18,7 +18,7 @@ module.exports = {
     root: rootPath,
     notifier: notifier,
     app: {
-      name: 'Cloudnetworks Cloud Server - Development'
+      name: 'Cloudnetworks Cloud Core - Development'
     },
     facebook: {
       clientID: "371211122956820",

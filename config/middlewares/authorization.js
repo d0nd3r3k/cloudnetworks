@@ -39,6 +39,19 @@ exports.article = {
 }
 
 /*
+ *  Medium authorizations routing middleware
+ */
+
+exports.medium = {
+    hasAuthorization : function (req, res, next) {
+      if (req.medium.user.id != req.user.id) {
+        return res.redirect('/media/'+req.medium.id)
+      }
+      next()
+    }
+}
+
+/*
  *  Boxes authorizations routing middleware
  */
 

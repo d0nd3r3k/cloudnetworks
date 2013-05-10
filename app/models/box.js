@@ -4,10 +4,11 @@
  */
 
 var mongoose = require('mongoose')
-  , env = process.env.NODE_ENV || 'development'
-  , config = require('../../config/config')[env]
-  , Schema = mongoose.Schema
-
+, Imager = require('imager')
+, env = process.env.NODE_ENV || 'development'
+, config = require('../../config/config')[env]
+, imagerConfig = require(config.root + '/config/imager.js')
+, Schema = mongoose.Schema
 /**
  * Getters
  */
@@ -34,6 +35,11 @@ var BoxSchema = new Schema({
   user: {type : Schema.ObjectId, ref : 'User'},
   status: {type : String, default : 'offline', trim : true},
   tags: {type: [], get: getTags, set: setTags},
+  media: [{
+      cdnUri: { type : String },
+      files: [],
+      createdAt: { type : Date, default : Date.now }
+    }],
   createdAt  : {type : Date, default : Date.now}
 })
 
@@ -70,11 +76,25 @@ BoxSchema.methods = {
    * @param {Function} cb
    * @api private
    */
-
   uploadAndSave: function (cb) {
-    var self = this
-    self.save(cb)
-  }
+        var self = this
+        self.save(cb)
+  },  
+  saveMedia: function (images, cb) {
+      var imager = new Imager(imagerConfig, 'S3')
+      var self = this
+  
+      imager.upload(images, function (err, cdnUri, files) {
+        if (err) return cb(err)
+        if (files.length) {
+            self.media.push({
+              cdnUri: cdnUri,
+              files: files
+            })
+        }
+        self.save(cb)
+      }, 'medium')
+    }
   
 }
 /**
@@ -120,3 +140,5 @@ BoxSchema.statics = {
 }
 
 mongoose.model('Box', BoxSchema)
+
+

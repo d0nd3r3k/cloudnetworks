@@ -1,4 +1,3 @@
-
 var async = require('async')
 
 module.exports = function (app, passport, auth) {
@@ -38,11 +37,25 @@ module.exports = function (app, passport, auth) {
 
   app.param('id', articles.article)
   
+  // Media routes
+  var media = require('../app/controllers/media')
+  app.get('/media', media.index)
+  app.get('/media/new', auth.requiresLogin, media.new)
+  app.post('/media', auth.requiresLogin, media.create)
+  app.get('/media/:id', media.show)
+  app.get('/media/:id/edit', auth.requiresLogin, auth.medium.hasAuthorization, media.edit)
+  app.put('/media/:id', auth.requiresLogin, auth.medium.hasAuthorization, media.update)
+  app.del('/media/:id', auth.requiresLogin, auth.medium.hasAuthorization, media.destroy)
+  
+  app.param('id', media.medium)
+  
+  
   // box routes
   var boxes = require('../app/controllers/boxes')
   app.get('/boxes', auth.requiresLogin, boxes.index)
   app.get('/boxes/new', auth.requiresLogin, boxes.new)
   app.post('/boxes', auth.requiresLogin, boxes.create)
+  app.post('/boxes/:boxId/media', auth.requiresLogin, boxes.addMedia)
   app.get('/boxes/:boxId',auth.requiresLogin, boxes.show)
   app.get('/boxes/:boxId/edit', auth.requiresLogin, auth.box.hasAuthorization, boxes.edit)
   app.put('/boxes/:boxId', auth.requiresLogin, auth.box.hasAuthorization, boxes.update)
