@@ -43,7 +43,7 @@ module.exports = {
   },
   //TODO: fix API keys & Secret
   production: {
-    db: 'mongodb://50.116.27.203/cloudnetworks',
+    db: 'mongodb://127.0.0.1/cloudnetworks',
     root: rootPath,
     notifier: notifier,
     app: {
