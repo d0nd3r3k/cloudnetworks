@@ -1,6 +1,3 @@
-/* Main application entry file. Please note, the order of loading is important.
- * Configuration loading and booting of controllers and custom error handlers */
-
 var express = require('express')
   , app = express()
   , fs = require('fs')
@@ -14,7 +11,7 @@ var env = process.env.NODE_ENV || 'development'
   , config = require('./config/config')[env]
   , auth = require('./config/middlewares/authorization')
   , mongoose = require('mongoose')
-
+console.log(env);
 // express settings
 require('./config/express')(app, config, passport)
 

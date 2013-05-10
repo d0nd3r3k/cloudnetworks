@@ -75,6 +75,7 @@ BoxSchema.methods = {
     var self = this
     self.save(cb)
   }
+  
 }
 /**
  * Statics
