@@ -11,7 +11,7 @@ var env = process.env.NODE_ENV || 'development'
   , config = require('./config/config')[env]
   , auth = require('./config/middlewares/authorization')
   , mongoose = require('mongoose')
-console.log(env);
+
 // express settings
 require('./config/express')(app, config, passport)
 
