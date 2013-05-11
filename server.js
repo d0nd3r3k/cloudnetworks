@@ -66,6 +66,7 @@ io.set('authorization', function (data, accept) {
                   var box_serial = data[0].serial, 
                       ss = online_users[data[0].user];            
                       ss.emit("boxIsOnline",{"serial": box_serial});
+                    }
               });
             });
           }
