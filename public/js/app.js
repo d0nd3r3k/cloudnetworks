@@ -19,7 +19,7 @@ $(document).ready(function () {
   });
 
   //Dashboard WebSockets
-  var online = false;
+  var online = true;
   var socket_url = 'http://localhost:8080';
   
   if(online){
