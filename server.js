@@ -62,11 +62,10 @@ io.set('authorization', function (data, accept) {
             function(err, box) {
               
               CloudBox.find('boxes').where('serial').equals(serial).exec(function(err, data){
-                var box_serial = data[0].serial, 
-                    ss = online_users[data[0].user];
-                                        
-                    ss.emit("boxIsOnline",{"serial": box_serial});
-
+                if(online_users[data[0].user] !== undefined){
+                  var box_serial = data[0].serial, 
+                      ss = online_users[data[0].user];            
+                      ss.emit("boxIsOnline",{"serial": box_serial});
               });
             });
           }
@@ -76,7 +75,7 @@ io.set('authorization', function (data, accept) {
         user_id = data.id;
         online_users[user_id] = socket
     })
-    /*socket.on('syncMedia', function(data){
+    socket.on('syncMedia', function(data){
       
       if(online_boxes[data[0].serial] === undefined){
         console.log('Error: Box is offline');   
@@ -85,7 +84,7 @@ io.set('authorization', function (data, accept) {
         var ss = online_boxes[data[0].serial]                    
         ss.emit("syncOnBox",data);
     }
-    })*/
+    })
     
     socket.on('disconnect', function(){
       if(serial != ""){
