@@ -93,11 +93,12 @@ io.set('authorization', function (data, accept) {
         CloudBox.findOneAndUpdate({ serial: serial },{ $set: { status: "offline" }},{ safe: true, upsert: true },
           function(err, box) {
           CloudBox.find('boxes').where('serial').equals(serial).exec(function(err, data){
-            var box_serial = data[0].serial, 
-                ss = online_users[data[0].user];
-                                    
-                ss.emit("boxIsOffline",{"serial": box_serial});
-          
+            if(online_users[data[0].user] !== undefined){  
+              var box_serial = data[0].serial, 
+                  ss = online_users[data[0].user];
+                                      
+                  ss.emit("boxIsOffline",{"serial": box_serial});
+            }
           });
         });
        console.log("box serial " + serial + " has just disconnected!");
