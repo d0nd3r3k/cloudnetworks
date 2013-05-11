@@ -1,0 +1,18 @@
+# domain: m-tech.me
+# public: /home/yoz/public/m-tech.me/
+
+<VirtualHost *:80>
+  # Admin email, Server Name (domain name), and any aliases
+  ServerAdmin webmaster@m-tech.me
+  ServerName  www.m-tech.me
+  ServerAlias m-tech.me
+
+  # Index file and Document Root (where the public files are located)
+  DirectoryIndex index.html index.php
+  DocumentRoot /home/yoz/public/m-tech.me/public
+
+  # Log file locations
+  LogLevel warn
+  ErrorLog  /home/yoz/public/m-tech.me/log/error.log
+  CustomLog /home/yoz/public/m-tech.me/log/access.log combined
+</VirtualHost>
